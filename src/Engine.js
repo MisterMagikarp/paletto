@@ -5,6 +5,12 @@ var Engine = function () {
 // private attributes and methods
 
     var player;
+    var player1 = new Array(0);
+    var player2 = new Array(0);
+    var player1_piece;
+    var player2_piece;
+    var corner = new Array(0);
+
     var board = new Array(6);
     var line, column;
     for (line=0; line < 6; line = line +1){
@@ -12,12 +18,23 @@ var Engine = function () {
     }
 
     this.initialisation = function(){
+        this.initialisation_player();
+        this.initialisation_board();
+    };
+
+    this.get_player = function(){
         return player;
     };
 
-
     this.check_length_board = function (){
         return ((board.length) * (board.length));
+    };
+
+    this.initialisation_player = function(){
+        player = 1;
+        player1_piece =0;
+        player2_piece = 0;
+        corner.push("A6","A1","F1","F6");
     };
 
     this.initialisation_board = function(){
@@ -84,7 +101,41 @@ var Engine = function () {
 
     };
 
+    this.ascii_code = function (column) {
+        return column.charCodeAt(0) -65;
+    };
 
+    this.remove_piece = function (line, column, player) {
+        var done = false;
+        column = this.ascii_code(column);
+
+        if (board[line - 1][column] != -1) {
+            done = true;
+            var piece = board[line-1][column];
+            board[line - 1][column] = -1;
+            if (player == 1) {
+                player1.unshift(piece);
+                player1_piece = player1_piece + 1;
+            }
+            else {
+                player2.unshift(piece);
+                player2_piece = player2_piece + 1;
+            }
+        }
+
+        return done;
+    };
+
+    this.remove_corner = function(line, column){
+
+
+
+
+
+
+
+
+    }
 
 
 // public methods
