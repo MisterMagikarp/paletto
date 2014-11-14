@@ -4,15 +4,20 @@ var Engine = function () {
 
 // private attributes and methods
 
-
+    var player;
     var board = new Array(6);
     var line, column;
     for (line=0; line < 6; line = line +1){
         board[line] = new Array(6)
     }
 
+    this.initialisation = function(){
+        return player;
+    };
+
+
     this.check_length_board = function (){
-        return board.length;
+        return ((board.length) * (board.length));
     };
 
     this.initialisation_board = function(){
@@ -58,22 +63,26 @@ var Engine = function () {
         board[4][1] = "Yellow";
         board[5][0] = "Yellow";
 
-        for (line=0; line < board.length();line = line+1){
-            for (column = 0; column < board.height(); column = column +1){
-                if (board[line-1] !== board[line] && board[line+1] !== board[line ){
-                    if (board[column-1] !== board[column] && board[column+1] !== board[column]){
-                        return true;
-                    }
-                }
-                else
-                {
-                    return false;
+    };
+
+    this.juxtaposition = function() {
+        var juxtaposition = 0;
+        var line = 1;
+
+        do {
+            for (column = 1; column < board.length -2; column = column +1) {
+                if ((board[line][column] == board[line+1][column]) || (board[line][column] == board[line - 1][column]) || (board[line][column] == board[line][column +1]) || (board[line][column] == board[line][column - 1])) {
+                    juxtaposition = 1;
+
                 }
             }
-        }
-    }
 
+            line = line +1;
 
+        } while (line<5);
+        return juxtaposition;
+
+    };
 
 
 
