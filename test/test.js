@@ -32,3 +32,22 @@ PalettoTestCase.prototype.testStory3 = function (){
     assertEquals(test.piece_number_player(1), 1);
     assertEquals(test.get_piece_tray(), 35);
 };
+
+PalettoTestCase.prototype.testStory4 = function () {
+    var test = new Engine();
+    test.initialisation();
+    test.remove_corner(5, 0);
+    test.add_corner(5, 0);
+    assertEquals(test.choice(), "Blue White BLack White Black");
+    var line = 1;
+    var column = "A";
+    assertEquals(test.remove_piece(line, column, 2), true);
+    line = 6;
+    column = "F";
+    assertEquals(test.remove_piece(line, column, 2), true);
+    assertEquals(test.piece_number_player(2), 2);
+};
+
+
+
+}
