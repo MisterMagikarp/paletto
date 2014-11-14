@@ -90,7 +90,6 @@ var Engine = function () {
             for (column = 1; column < board.length -2; column = column +1) {
                 if ((board[line][column] == board[line+1][column]) || (board[line][column] == board[line - 1][column]) || (board[line][column] == board[line][column +1]) || (board[line][column] == board[line][column - 1])) {
                     juxtaposition = 1;
-
                 }
             }
 
@@ -121,21 +120,219 @@ var Engine = function () {
                 player2.unshift(piece);
                 player2_piece = player2_piece + 1;
             }
+            if (this.remove_corner(line-1, column) == 0){
+                this.add_corner(line-1, column);
+            }
         }
 
         return done;
     };
 
-    this.remove_corner = function(line, column){
+    this.piece_number_player = function(player){
+        if (player ==1){
+            return player1_piece;
+        }
+        else if (player == 2){
+            return player2_piece;
+        }
+        return 0;
+    };
 
+    this.get_piece_tray = function(){
+        var total =0;
+        for (line =0; line <6; line = line + 1){
+            for (column =0; column < 6; column = column +1){
+                if (board[line][column] != -1){
+                    total ++;
+                }
+            }
+        }
+        return total;
+    };
 
-
-
-
-
-
-
+    this.neighbor = function(line, column){
+        var nb_neighbor = 0;
+        if (board[line-1][column] != -1){
+            nb_neighbor = nb_neighbor +1;
+        }
+        if (board[line+1][column] != -1){
+            nb_neighbor = nb_neighbor +1;
+        }
+        if (board[line][column-1] != -1){
+            nb_neighbor = nb_neighbor +1;
+        }
+        if (board[line][column+1] != -1){
+            nb_neighbor = nb_neighbor +1;
+        }
+        if (nb_neighbor >=3){
+            return 1;
+        }
     }
+
+    this.letter = function(column){
+        column = column + 65;
+        column = String.fromCharCode(column);
+        return column;
+    };
+
+    this.remove_corner = function(line, column){
+        var remove =0;
+        var nb;
+        var temp;
+        var popped;
+
+        if (line !=5 && line !=0){
+            if (column !=5 && column != 0){
+                if (this.neighbor(line,column) == 1){
+                    if (this.neighbor(line,column)) {
+                        remove = 1;
+                        column = this.letter(column);
+                        nb = 0;
+                        while (nb < corner.length) {
+                            popped = corner.pop();
+                            temp = column;
+                            temp = temp + (line + 1);
+                            if (popped != temp) {
+                                corner.unshift(popped);
+                            }
+                            nb++;
+                        }
+                    }
+                }
+            }
+        }
+
+        else {
+            column = this.letter(column);
+            nb = 0;
+            while (nb < corner.length) {
+                popped = corner.pop();
+                temp = column;
+                temp = temp + (line +1);
+                if (popped != temp) {
+                    corner.unshift(popped);
+                }
+                nb++;
+            }
+        }
+        return remove;
+    };
+
+    this.add_corner= function(line, column){
+        var col;
+        var l;
+        var temp;
+        if(line !=5 && line != 0 ){
+            if (column != 0 && column != 5) {
+                col = this.letter(column - 1);
+                l = line + 1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line, column, temp);
+                col = this.letter(column + 1);
+                l = line + 1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line, column, temp);
+                col = this.letter(column);
+                l = line + 2;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line, column, temp);
+                col = this.letter(column);
+                l = line;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line, column, temp);
+            }
+        }else if(line ==0){
+            if(column ==0 ){
+                col = this.letter(column+1);
+                l =line +1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column);
+                l =line +2;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+            }else if(column == 5){
+                col = this.letter(column-1);
+                l =line +1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column);
+                l =line +2;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+            }else{
+                col = this.letter(column+1);
+                l =line +1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column-1);
+                l =line +1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column);
+                l =line+2;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+            }
+        }else if(line == 5){
+            if(column ==0){
+                col = this.letter(column);
+                l =line ;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column +1);
+                l =line +1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+            }else if(column == 5){
+                col = this.letter(column);
+                l =line;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column-1);
+                l =line+1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+            }else{
+                col = this.letter(column);
+                l =line;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column-1);
+                l =line+1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+                col = this.letter(column+1);
+                l =line+1;
+                temp = col;
+                temp = temp + l;
+                this.insertion(line,column,temp);
+            }
+        }
+    };
+
+    this.insertion = function(l, col, temp){
+        if (board[l][col] != -1) {
+            corner.unshift(temp);
+        }
+    };
 
 
 // public methods
