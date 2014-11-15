@@ -38,7 +38,7 @@ PalettoTestCase.prototype.testStory4 = function () {
     test.initialisation();
     test.remove_corner(5, 0);
     test.add_corner(5, 0);
-    assertEquals(test.choice(), "Blue White BLack White Black");
+    assertEquals(test.choice(), "Blue White Black White Black ");
     var line = 1;
     var column = "A";
     assertEquals(test.remove_piece(line, column, 2), true);
@@ -47,7 +47,3 @@ PalettoTestCase.prototype.testStory4 = function () {
     assertEquals(test.remove_piece(line, column, 2), true);
     assertEquals(test.piece_number_player(2), 2);
 };
-
-
-
-}

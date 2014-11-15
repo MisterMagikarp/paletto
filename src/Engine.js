@@ -10,6 +10,7 @@ var Engine = function () {
     var player1_piece;
     var player2_piece;
     var corner = new Array(0);
+    var corner_color = new Array(6);
 
     var board = new Array(6);
     var line, column;
@@ -167,7 +168,7 @@ var Engine = function () {
         if (nb_neighbor >=3){
             return 1;
         }
-    }
+    };
 
     this.letter = function(column){
         column = column + 65;
@@ -334,6 +335,31 @@ var Engine = function () {
         }
     };
 
+    this.choice = function(){
+        var popped;
+        var size = corner.length;
+        var nb = 0;
+        var color = "";
+
+        while (nb < size){
+            popped = corner.pop();
+             var temp_col = this.ascii_code(popped);
+            var temp_line = (popped.substr(1,1))-1;
+            corner_color.push(board[temp_line][temp_col]);
+            corner.unshift(popped);
+            nb++;
+        }
+
+        nb =0;
+        while(nb <size){
+            popped = corner_color.pop();
+            color = color + popped + " ";
+            corner_color.unshift(popped);
+            nb++;
+        }
+
+        return color;
+    }
 
 // public methods
 };
