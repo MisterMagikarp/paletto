@@ -359,7 +359,8 @@ var Engine = function () {
         }
 
         return color;
-    }
+    };
+
 
 // public methods
 };
